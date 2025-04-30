@@ -21,6 +21,28 @@ async function bootstrap() {
   const httpAdapterHost = app.get(HttpAdapterHost);
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapterHost));
 
+  // Закомментированная настройка микросервиса
+  /* 
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.TCP,
+    options: {
+      host: '0.0.0.0',
+      port: 3001,
+      //Oбработчик подключения
+      onConnect: () => {
+        Logger.log('Микросервис пользователей успешно подключен!');
+      },
+      //Oбработчик отключения
+      onDisconnect: () => {
+        console.log('Микросервис пользователей отключился...');
+      }
+    }
+  });
+
+  // Запуск микросервисов
+  await app.startAllMicroservices();
+  */
+
   const config = new DocumentBuilder()
     .setTitle('Cервис управления пользователями RULYOU')
     .setDescription('API для управления пользователями')
