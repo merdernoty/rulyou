@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsInt, IsNotEmpty, MinLength, Min } from 'class-validator';
+import { IsString, IsInt, IsNotEmpty, MinLength, Min, MaxLength } from 'class-validator';
 
 export class CreateUserDto {
   @ApiProperty({
@@ -10,6 +10,7 @@ export class CreateUserDto {
   @IsNotEmpty({ message: 'Полное имя не может быть пустым' })
   @IsString({ message: 'Полное имя должно быть строкой' })
   @MinLength(2, { message: 'Полное имя должно содержать минимум 2 символа' })
+  @MaxLength(100,{ message: 'Полное имя должно содержать максимум 100 символов' } )
   full_name: string;
 
   @ApiProperty({
@@ -17,6 +18,7 @@ export class CreateUserDto {
     example: 'developer',
   })
   @MinLength(2, { message: 'Роль должна содержать минимум 2 символа' })
+  @MaxLength(100,{ message: 'Роль должна содержать максимум 100 символов' } )
   @IsNotEmpty({ message: 'Роль не может быть пустой' })
   @IsString({ message: 'Роль должна быть строкой' })
   role: string;

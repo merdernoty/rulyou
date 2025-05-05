@@ -16,7 +16,7 @@ export class UsersService {
     return this.usersRepository.getAllUsers(role);
   }
 
-  async findOne(id: string): Promise<User> {
+  async findOne(id: number): Promise<User> {
     const user = await this.usersRepository.getUserById(id);
     if (!user) {
       throw new NotFoundException(`User with ID ${id} not found`);
@@ -24,7 +24,7 @@ export class UsersService {
     return user;
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.findOne(id);
 
     if (!user) {
@@ -34,14 +34,21 @@ export class UsersService {
     return this.usersRepository.updateUser(id, updateUserDto);
   }
 
-  async remove(id: string): Promise<User> {
+  async remove(id: number): Promise<User> {
     const user = await this.findOne(id);
 
     if (!user) {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
 
-    return this.usersRepository.deleteUser(id);
+    const userData = {
+      id: user.id,
+      full_name: user.full_name,
+      role: user.role,
+      efficiency: user.efficiency,
+    };
+    await this.usersRepository.deleteUser(id);
+    return userData
   }
 
   async removeAll(): Promise<void> {

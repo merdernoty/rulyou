@@ -1,12 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { IsString, IsInt, IsNotEmpty, IsUUID } from 'class-validator';
-import { v4 as uuidv4 } from 'uuid';
 
 @Entity('users')
 export class User {
-  @PrimaryGeneratedColumn('uuid')
-  @IsUUID()
-  id: string = uuidv4();
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ type: 'varchar' })
   @IsNotEmpty()

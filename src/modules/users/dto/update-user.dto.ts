@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsInt, IsOptional, IsString, Min, MinLength } from 'class-validator';
+import { IsInt, IsOptional, IsString, MaxLength, Min, MinLength } from 'class-validator';
 
 export class UpdateUserDto {
   @ApiPropertyOptional({
@@ -9,6 +9,7 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString({ message: 'Полное имя должно быть строкой' })
   @MinLength(2, { message: 'Полное имя должно содержать минимум 2 символа' })
+  @MaxLength(100,{ message: 'Полное имя должно содержать максимум 100 символов' } )
   full_name?: string;
 
   @ApiPropertyOptional({
@@ -17,6 +18,7 @@ export class UpdateUserDto {
   })
   @IsOptional()
   @MinLength(2, { message: 'Роль должна содержать минимум 2 символа' })
+  @MaxLength(100,{ message: 'Роль должна содержать максимум 100 символов' } )
   @IsString({ message: 'Роль должна быть строкой' })
   role?: string;
 

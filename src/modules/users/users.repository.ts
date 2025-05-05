@@ -15,7 +15,7 @@ export class UsersRepository extends Repository<User> {
     return this.save(user);
   }
 
-  async getUserById(id: string): Promise<User | null> {
+  async getUserById(id: number): Promise<User | null> {
     return this.findOne({ where: { id } });
   }
 
@@ -23,12 +23,12 @@ export class UsersRepository extends Repository<User> {
     return role ? this.find({ where: { role } }) : this.find();
   }
 
-  async updateUser(id: string, updateUserDto: UpdateUserDto): Promise<User | null> {
+  async updateUser(id: number, updateUserDto: UpdateUserDto): Promise<User | null> {
     await this.update(id, updateUserDto);
     return this.findOne({ where: { id } });
   }
 
-  async deleteUser(id: string): Promise<User | null> {
+  async deleteUser(id: number): Promise<User | null> {
     const user = await this.findOne({ where: { id } });
     if (user) {
       await this.remove(user);

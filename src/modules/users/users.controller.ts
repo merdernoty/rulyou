@@ -8,6 +8,7 @@ import {
   Param,
   Query,
   UseInterceptors,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { UsersService } from './users.service';
@@ -55,7 +56,7 @@ export class UsersController {
   })
   @ApiResponse({ status: 200, description: 'Данные пользователя' })
   @ApiResponse({ status: 404, description: 'Пользователь не найден' })
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id', ParseIntPipe) id: number) {
     const user = await this.usersService.findOne(id);
     return { users: [user] };
   }
@@ -71,7 +72,7 @@ export class UsersController {
     status: 400,
     description: 'Ошибка при обновлении пользователя',
   })
-  async update(@Param('id') id: string, @Body(new ValidationPipe()) updateUserDto: UpdateUserDto) {
+  async update(@Param('id', ParseIntPipe) id: number, @Body(new ValidationPipe()) updateUserDto: UpdateUserDto) {
     const user = await this.usersService.update(id, updateUserDto);
     return user;
   }
@@ -104,7 +105,7 @@ export class UsersController {
     status: 404,
     description: 'Пользователь не найден',
   })
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id', ParseIntPipe) id: number) {
     const user = await this.usersService.remove(id);
     return user;
   }
